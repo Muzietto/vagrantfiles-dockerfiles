@@ -1,0 +1,74 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+unless Vagrant.has_plugin?('vagrant-vbguest')
+   raise 'Please run "vagrant plugin install vagrant-vbguest" before'
+end
+
+Vagrant.configure(2) do |config|
+
+  # inspired by https://gist.github.com/diegopacheco/1f3d19f9645288febf83
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.box_check_update = false
+  config.vm.hostname = "jdk8-idea"
+
+  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
+  # such as FTP and Heroku are also available. See the documentation at
+  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
+  # config.push.define "atlas" do |push|
+  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
+  # end
+
+  config.vm.provider "virtualbox" do |vb|
+    # Customize the amount of memory on the VM:
+    vb.memory = "2048"
+    vb.cpus = "4"
+  end
+
+  config.ssh.forward_x11 = "true"
+
+  config.vm.network "private_network", ip: "55.55.55.102"
+  config.vm.synced_folder ".", "/home/vagrant/shared/"
+  config.vm.synced_folder "put_here", "/vagrant/put_here"
+    
+  config.vm.provision "shell", inline: <<-SHELL    
+    #
+    # Update and install basic linux programs for development
+    #
+    sudo apt-get update     
+    sudo apt-get install -y wget
+    sudo apt-get install -y curl
+    sudo apt-get install -y vim
+    sudo apt-get install -y git    
+    sudo apt-get install -y build-essential
+    sudo apt-get install -y unzip 
+    #
+    # Install Java 8 
+    #
+    if [! -d /opt/jdk-8u45-linux-x64 ]; then
+      cd /opt
+      sudo wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u45-b14/jdk-8u45-linux-x64.tar.gz"
+      sudo tar -xzvf jdk-8u45-linux-x64.tar.gz
+      sudo rm -rf jdk-8u45-linux-x64.tar.gz
+    #fi
+    #
+    # Install Maven 3.3
+    #
+    if [! -d /opt/apache-maven-3.3.3 ]; then
+      sudo wget http://mirror.nbtelecom.com.br/apache/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
+      sudo tar -xzvf apache-maven-3.3.3-bin.tar.gz
+      sudo rm -rf apache-maven-3.3.3-bin.tar.gz
+    #fi
+    #
+    # Install Intellij IDEA Ultimate 2016.2
+    #
+    if [! -d /opt/ideaIU-2016.2.4 ]; then
+      sudo wget https://download.jetbrains.com/idea/ideaIU-2016.2.4.tar.gz
+      sudo tar -xzvf ideaIU-2016.2.4.tar.gz
+      #sudo rm -rf ideaIU-2016.2.4.tar.gz
+    #fi
+  SHELL
+  config.vm.provision "shell", path: "bashrc_config.sh"
+  # Message at the end of provisioning
+  config.vm.post_up_message = "Access this machine with 'vagrant ssh -- -X' if you want to use /opt/intellij/default/bin/idea.sh"
+end
