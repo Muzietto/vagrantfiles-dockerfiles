@@ -1,2 +1,2 @@
 # vagrantfiles-dockerfiles
-A collection various Vagrant- and Dockerfile's
+A collection of various Vagrant- and Dockerfile's
