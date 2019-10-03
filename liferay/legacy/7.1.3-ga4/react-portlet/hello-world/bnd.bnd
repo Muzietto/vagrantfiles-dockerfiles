@@ -1,0 +1,5 @@
+Bundle-Name: hello-world
+Bundle-SymbolicName: com.edenred.helloworld
+Bundle-Version: 1.0.0
+Export-Package: com.edenred.helloworld.constants
+Web-ContextPath: /hello-world
