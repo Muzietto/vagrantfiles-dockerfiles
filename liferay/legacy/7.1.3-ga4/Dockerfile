@@ -1,10 +1,11 @@
-FROM liferay/portal:7.2.0-ga1
+FROM liferay/portal:7.1.3-ga4
 
 USER root
 
 RUN set -x && \
     apk update && \
     apk upgrade && \
+    apk add --update nodejs npm && \
     curl -sL https://github.com/jpm4j/jpm4j.installers/raw/master/dist/biz.aQute.jpm.run.jar > tmp.jar && \
     export JPM_BIN_DIR=`java -jar tmp.jar -g init | grep -e "Bin[ \t]*dir" | awk '{print $3}'` && \
     rm -f tmp.jar && \
@@ -13,6 +14,6 @@ RUN set -x && \
 
 USER liferay
 
-COPY --chown=liferay:liferay ./deploy /opt/liferay/blade-deploy
+COPY --chown=liferay:liferay files /opt/liferay
 
 EXPOSE 8080 11311
