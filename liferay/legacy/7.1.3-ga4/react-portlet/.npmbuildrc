@@ -1,6 +1,9 @@
 {
 	"liferayDir": "/opt/liferay",
 	"webpack": {
+		"entry": {
+    	main: '../src/index-liferay.js'
+  	},
 		"rules": [
 			{
 				"test": "src\\/.*\\.js$",
