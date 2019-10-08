@@ -2,62 +2,28 @@ import React from 'react';
 import { Machine } from 'xstate';
 import { useMachine } from '@xstate/react';
 
-const wizardStateMachine = Machine({
-	id: 'wizard',
-	initial: 'question_1',
-	states: {
-		question_1: {
-			on: {
-				NEXT: 'question_2',
-			},
-			value: {
-				title: 'Chi è Pippo?',
-				questions: [{
-					id: 1,
-					text: 'Cane',
-				}, {
-					id: 2,
-					text: 'Gatto',
-				}],
-			},
-		},
-		question_2: {
-			on: {
-				PREVIOUS: 'question_1',
-			},
-		},
-	},
+const toggleMachine = Machine({
+  id: 'toggle',
+  initial: 'inactive',
+  states: {
+    inactive: {
+      on: { TOGGLE: 'active' }
+    },
+    active: {
+      on: { TOGGLE: 'inactive' }
+    }
+  }
 });
 
 const App = () => {
 
-	const [current, send] = useMachine(wizardStateMachine);
+	const [current, send] = useMachine(toggleMachine);
 
 	return (
-		<div>
-			<h1>Edenred Survey</h1>
-
-			<div>
-				{current.value}
-			</div>
-			<div>
-				<button
-					onClick={() => send('PREVIOUS')}>
-					PREVIOUS
-				</button>
-				<button
-					onClick={() => send('NEXT')}>
-					NEXT
-				</button>
-			</div>
-		</div>
+		<button onClick={() => send('TOGGLE')}>
+			{current.matches('inactive') ? 'Off' : 'On'}
+		</button>
 	);
-
-	// return (
-	// 	<button onClick={() => send('TOGGLE')}>
-	// 		{current.matches('inactive') ? 'Off' : 'On'}
-	// 	</button>
-	// );
 
 }
 
