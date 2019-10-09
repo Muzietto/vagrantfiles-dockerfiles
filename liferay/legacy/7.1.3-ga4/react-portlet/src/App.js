@@ -5,6 +5,7 @@ import Introduction from './pages/Introduction';
 import StepOne from './pages/StepOne';
 import StepTwo from './pages/StepTwo';
 import SurveyResult from './pages/SurveyResult';
+import Paper from '@material-ui/core/Paper';
 
 const surveyStateMachine = machine.withConfig({});
 
@@ -18,6 +19,9 @@ const App = () => {
 
 	return (
 		<div>
+	//		<Paper elevation={4}>
+	//		  <p>Ciao Paper</p>
+	//		</Paper>
 			<div>
 				{state.matches('introduction') && (
 					<Introduction name={name} send={send} />
