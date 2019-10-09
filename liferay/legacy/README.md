@@ -15,7 +15,10 @@ docker exec -it liferay-portal /bin/bash
 - Sign in as test@liferay.com/test
 - ControlPanel -> Apps -> Purchased
 - Sign in (create account if necessary) and allow access
-- Purchase Liferay CS Portlet Extender (it's free of charge)
+- Verify that Liferay CS Portlet Extender is installed
+
+### what if Liferay CS Portlet Extender is not installed
+- Purchase Liferay CS Portlet Extender from the Marketplace (it's free of charge)
 - from the command line: `docker restart liferay-portal`
 
 ## COMPILE SAMPLE PROJECT (from command line)
@@ -28,10 +31,8 @@ npm i
 
 npm run build
 
-from inside the container: cp react-portlet/liferay-react-demo/portlet/build/*.jar /opt/liferay/deploy
-
 ## LAST OPERATIONS ON LOCALHOST:8080
 
 - verify in ControlPanel -> Apps -> AppManager that module `react-portlet` is present
 
-- add widget react-portlet to any AppManager
+- add widget react-portlet to any portal page
