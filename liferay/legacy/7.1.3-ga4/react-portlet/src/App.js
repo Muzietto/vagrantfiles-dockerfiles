@@ -19,9 +19,9 @@ const App = () => {
 
 	return (
 		<div>
-	//		<Paper elevation={4}>
-	//		  <p>Ciao Paper</p>
-	//		</Paper>
+			<Paper elevation={4}>
+			  <p>Ciao Paper</p>
+			</Paper>
 			<div>
 				{state.matches('introduction') && (
 					<Introduction name={name} send={send} />
