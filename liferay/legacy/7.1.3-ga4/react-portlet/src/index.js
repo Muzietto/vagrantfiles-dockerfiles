@@ -1,5 +1,6 @@
 // import './index.css';
 import App from './App';
+//import App2 from './App2';
 import React from 'react'; // eslint-disable-line
 import ReactDOM from 'react-dom';
 
