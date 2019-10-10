@@ -20,17 +20,32 @@ const App = () => {
 	    margin: '10px',
 			width: '260px',
 			padding: '10px',
+			display: 'flex',
+			flexDirection: 'column',
+			justifyContent: 'space-between',
 	  },
 		slider: {
 	    display: 'flex',
 	    height: '350px',
 	  },
 		input: {
-	    width: '200px',
-			margin: '10px',
+	    width: '90%',
+	  },
+		radio: {
+			margin: '0 0 10px 10px',
+	  },
+		result: {
+			margin: '10px 0',
 	  },
 		button: {
-		    margin: '10px',
+			margin: '10px',
+	  },
+		buttons: {
+	    height: '60px',
+	  },
+		radios: {
+	    paddingTop: '20px',
+			paddingBottom: '20px',
 	  },
 	};
 
@@ -47,119 +62,126 @@ const App = () => {
 			      <h2 id='introductions'>What's your name?</h2>
 			      <div>
 			        <input
-							  style={styles.input}
+								style={styles.input}
 			          type='text'
 			          value={name || ''}
 			          onChange={e => send({type: 'NAME.CHANGE', value: e.target.value})}
 			        />
 			      </div>
-						<Button
-							style={styles.button}
-							variant='contained'
-							onClick={() => send('NEXT')}>NEXT</Button>
+						<div style={styles.buttons}>
+							<Button
+								style={styles.button}
+								variant='contained'
+								onClick={() => send('NEXT')}>NEXT</Button>
+						</div>
 					</Paper>
 				</Slide>
 				<Slide direction='left' in={state.value >= 1} mountOnEnter unmountOnExit>
 					<Paper elevation={4} style={styles.paper}>
 						<h2>{name}, Which Marvel character do you prefer?</h2>
-			      <div>
+			      <div style={styles.radios}>
 			        <input
+  							style={styles.radio}
 			          type='radio'
 			          name='marvell-character'
 			          onClick={() => send({
 									type: 'MARVEL.ANSWER',
 									value: { id: 1, value:'Iron Man', type: 'marvell' }
 								})}
-			        /> Iron Man
-			      </div>
-			      <div>
+			        /> Iron Man<br/>
 			        <input
+  							style={styles.radio}
 			          type='radio'
 			          name='marvell-character'
 			          onClick={() => send({
 									type: 'MARVEL.ANSWER',
 									value: { id: 2, value:'Spider Man', type: 'marvell' }
 								})}
-			        /> Spider Man
-			      </div>
-			      <div>
+			        /> Spider Man<br/>
 			        <input
+								style={styles.radio}
 			          type='radio'
 			          name='marvell-character'
 			          onClick={() => send({
 									type: 'MARVEL.ANSWER',
 									value: { id: 3, value:'Captain America', type: 'marvell' }
 								})}
-			        /> Captain America
-			      </div>
-						<Button
-							style={styles.button}
-							variant='contained'
-							onClick={() => send('BACK')}>BACK</Button>
-						<Button
-							style={styles.button}
-							variant='contained'
-							onClick={() => send('NEXT')}>NEXT</Button>
+			        /> Captain America<br/>
+						</div>
+						<div style={styles.buttons}>
+							<Button
+								style={styles.button}
+								variant='contained'
+								onClick={() => send('BACK')}>BACK</Button>
+							<Button
+								style={styles.button}
+								variant='contained'
+								onClick={() => send('NEXT')}>NEXT</Button>
+						</div>
 					</Paper>
 				</Slide>
 				<Slide direction='left' in={state.value >= 2} mountOnEnter unmountOnExit>
 					<Paper elevation={4} style={styles.paper}>
 						<h2>{name}, Which DC Comics character do you prefer?</h2>
-			      <div>
+						<div style={styles.radios}>
 			        <input
+		  					style={styles.radio}
+  							name='dc-comics-character'
 			          type='radio'
 			          onClick={() => send({
 									type: 'DCCOMICS.ANSWER',
 									value: { id: 4, value:'Batman', type: 'dc-comics' }
 								})}
-			        /> Batman
-			      </div>
-			      <div>
+			        /> Batman<br/>
 			        <input
+	  						style={styles.radio}
 			          type='radio'
-			          name='marvell-character'
+			          name='dc-comics-character'
 			          onClick={() => send({
 									type: 'DCCOMICS.ANSWER',
 									value: { id: 5, value:'Super Man', type: 'dc-comics' }
 								})}
-			        /> Super Man
-			      </div>
-			      <div>
+			        /> Super Man<br/>
 			        <input
+  							style={styles.radio}
 			          type='radio'
-			          name='marvell-character'
+			          name='dc-comics-character'
 			          onClick={() => send({
 									type: 'DCCOMICS.ANSWER',
 									value: { id: 6, value:'Joker', type: 'dc-comics' }
 								})}
-			        /> Joker
+			        /> Joker<br/>
 			      </div>
-						<Button
-							style={styles.button}
-							variant='contained'
-							onClick={() => send('BACK')}>BACK</Button>
-						<Button
-							style={styles.button}
-							variant='contained'
-							onClick={() => send('NEXT')}>NEXT</Button>
+						<div style={styles.buttons}>
+							<Button
+								style={styles.button}
+								variant='contained'
+								onClick={() => send('BACK')}>BACK</Button>
+							<Button
+								style={styles.button}
+								variant='contained'
+								onClick={() => send('NEXT')}>NEXT</Button>
+						</div>
 					</Paper>
 				</Slide>
 				<Slide direction='left' in={state.value >= 3} mountOnEnter unmountOnExit>
 					<Paper elevation={4} style={styles.paper}>
 						<h2>Survey Result</h2>
-			      <br />
 			      <div>
-			        Name: <b>{name}</b> <br />
+						  <div style={styles.result}>
+  			        Name: <b>{name}</b>
+							</div>
 			        {answers.map((answer, index) =>
-								<div key={index}>
-								  Favourite <b>{answer.type}</b>
-									character is <b>{answer.value}</b>
+								<div key={index} style={styles.result}>
+								  Favourite <b>{answer.type}</b> character is <b>{answer.value}</b>
 								</div>)}
 			      </div>
-						<Button
-							style={styles.button}
-							variant='contained'
-							onClick={() => send('BACK')}>BACK</Button>
+						<div style={styles.buttons}>
+							<Button
+								style={styles.button}
+								variant='contained'
+								onClick={() => send('BACK')}>BACK</Button>
+						</div>
 					</Paper>
 				</Slide>
 			</div>
