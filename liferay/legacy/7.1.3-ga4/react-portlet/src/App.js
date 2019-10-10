@@ -7,30 +7,30 @@ import StepTwo from './pages/StepTwo';
 import SurveyResult from './pages/SurveyResult';
 import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
+import Button from '@material-ui/core/Button';
 
 const surveyStateMachine = machine.withConfig({});
 
 const App = () => {
 
   const styles = {
-		svg: {
-	    width: '400px',
-	    height: '300px',
-	  },
-	  polygon: {
-	    fill: 'white',
-	    stroke: 'red',
-	    strokeWidth: 1,
-	  },
 		paper: {
 	    zIndex: 1,
 	    position: 'relative',
 	    margin: '10px',
-			width: '200px',
+			width: '260px',
+			padding: '10px',
 	  },
 		slider: {
 	    display: 'flex',
 	    height: '350px',
+	  },
+		input: {
+	    width: '200px',
+			margin: '10px',
+	  },
+		button: {
+		    margin: '10px',
 	  },
 	};
 
@@ -42,56 +42,67 @@ const App = () => {
 
 	return <div>
 			<div style={styles.slider}>
-				<Slide direction='left' in={state.matches('introduction')} mountOnEnter unmountOnExit>
+				<Slide direction='left' in={state.value >= 0} mountOnEnter unmountOnExit>
 					<Paper elevation={4} style={styles.paper}>
 			      <h2 id='introductions'>What's your name?</h2>
 			      <div>
 			        <input
+							  style={styles.input}
 			          type='text'
 			          value={name || ''}
 			          onChange={e => send({type: 'NAME.CHANGE', value: e.target.value})}
 			        />
 			      </div>
-						<Buttons />
+						<Button
+							style={styles.button}
+							variant='contained'
+							onClick={() => send('NEXT')}>NEXT</Button>
 					</Paper>
 				</Slide>
-				<Slide direction='left' in={state.matches('marvel')} mountOnEnter unmountOnExit>
+				<Slide direction='left' in={state.value >= 1} mountOnEnter unmountOnExit>
 					<Paper elevation={4} style={styles.paper}>
 						<h2>{name}, Which Marvel character do you prefer?</h2>
 			      <div>
 			        <input
 			          type='radio'
-			          name='marvel-character'
+			          name='marvell-character'
 			          onClick={() => send({
 									type: 'MARVEL.ANSWER',
-									value: { id: 1, value:'Iron Man', type: 'marvel' }
+									value: { id: 1, value:'Iron Man', type: 'marvell' }
 								})}
 			        /> Iron Man
 			      </div>
 			      <div>
 			        <input
 			          type='radio'
-			          name='marvel-character'
+			          name='marvell-character'
 			          onClick={() => send({
 									type: 'MARVEL.ANSWER',
-									value: { id: 2, value:'Spider Man', type: 'marvel' }
+									value: { id: 2, value:'Spider Man', type: 'marvell' }
 								})}
 			        /> Spider Man
 			      </div>
 			      <div>
 			        <input
 			          type='radio'
-			          name='marvel-character'
+			          name='marvell-character'
 			          onClick={() => send({
 									type: 'MARVEL.ANSWER',
-									value: { id: 3, value:'Captain America', type: 'marvel' }
+									value: { id: 3, value:'Captain America', type: 'marvell' }
 								})}
 			        /> Captain America
 			      </div>
-						<Buttons />
+						<Button
+							style={styles.button}
+							variant='contained'
+							onClick={() => send('BACK')}>BACK</Button>
+						<Button
+							style={styles.button}
+							variant='contained'
+							onClick={() => send('NEXT')}>NEXT</Button>
 					</Paper>
 				</Slide>
-				<Slide direction='left' in={state.matches('dc-comics')} mountOnEnter unmountOnExit>
+				<Slide direction='left' in={state.value >= 2} mountOnEnter unmountOnExit>
 					<Paper elevation={4} style={styles.paper}>
 						<h2>{name}, Which DC Comics character do you prefer?</h2>
 			      <div>
@@ -106,7 +117,7 @@ const App = () => {
 			      <div>
 			        <input
 			          type='radio'
-			          name='marvel-character'
+			          name='marvell-character'
 			          onClick={() => send({
 									type: 'DCCOMICS.ANSWER',
 									value: { id: 5, value:'Super Man', type: 'dc-comics' }
@@ -116,17 +127,24 @@ const App = () => {
 			      <div>
 			        <input
 			          type='radio'
-			          name='marvel-character'
+			          name='marvell-character'
 			          onClick={() => send({
 									type: 'DCCOMICS.ANSWER',
 									value: { id: 6, value:'Joker', type: 'dc-comics' }
 								})}
 			        /> Joker
 			      </div>
-						<Buttons />
+						<Button
+							style={styles.button}
+							variant='contained'
+							onClick={() => send('BACK')}>BACK</Button>
+						<Button
+							style={styles.button}
+							variant='contained'
+							onClick={() => send('NEXT')}>NEXT</Button>
 					</Paper>
 				</Slide>
-				<Slide direction='left' in={state.matches('review')} mountOnEnter unmountOnExit>
+				<Slide direction='left' in={state.value >= 3} mountOnEnter unmountOnExit>
 					<Paper elevation={4} style={styles.paper}>
 						<h2>Survey Result</h2>
 			      <br />
@@ -138,41 +156,25 @@ const App = () => {
 									character is <b>{answer.value}</b>
 								</div>)}
 			      </div>
-						<Buttons />
+						<Button
+							style={styles.button}
+							variant='contained'
+							onClick={() => send('BACK')}>BACK</Button>
 					</Paper>
 				</Slide>
 			</div>
-			{/*
-			<div>
-				{state.matches('introduction') && (
-					<Introduction name={name} send={send} />
-				)}
-				{state.matches('marvel') && (
-					<StepOne name={name} send={send} />
-				)}
-				{state.matches('dc-comics') && (
-					<StepTwo name={name} send={send} />
-				)}
-				{state.matches('review') && (
-					<SurveyResult name={name} answers={answers} send={send} />
-				)}
-			</div>
-			<br />
-			*/}
 		</div>;
 
 	function Buttons() {
 	  return <div>
-			{!state.matches('introduction') && <input
-				type='button'
-				onClick={() => send('BACK')}
-				value='Back'
-			/>}
-			{!state.matches('review') &&  <input
-				type='button'
-				onClick={() => send('NEXT')}
-				value='Next'
-			/>}
+			{state.value >= 1 && <Button
+				style={styles.button}
+				variant='contained'
+				onClick={() => send('BACK')}>BACK</Button>}
+			{state.value <= 2 && <Button
+				style={styles.button}
+				variant='contained'
+				onClick={() => send('NEXT')}>NEXT</Button>}
 		</div>;
 	}
 }

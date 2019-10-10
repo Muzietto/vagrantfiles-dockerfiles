@@ -7,12 +7,12 @@ export const config = {
     name: null,
     answers: [],
   },
-  initial: 'introduction',
+  initial: '0',
   states: {
-    introduction: {on: {NEXT: 'marvel'}},
-    marvel: {on: {BACK: 'introduction', NEXT: 'dc-comics'}},
-    'dc-comics': {on: {BACK: 'marvel', NEXT: 'review'}},
-    review: {on: {BACK: 'dc-comics'}},
+    '0': {on: {NEXT: '1'}},
+    '1': {on: {BACK: '0', NEXT: '2'}},
+    '2': {on: {BACK: '1', NEXT: '3'}},
+    '3': {on: {BACK: '2'}},
   },
   on: {
     'NAME.CHANGE': {
@@ -21,16 +21,16 @@ export const config = {
       }),
     },
     'MARVEL.ANSWER': {
-      target: 'marvel',
+      target: '1',
       actions: assign({
         answers: (ctx, { value }) => {
-          const currentAnswer = ctx.answers.filter(answer => answer.type !== 'marvel');
+          const currentAnswer = ctx.answers.filter(answer => answer.type !== 'marvell');
           return [ ...currentAnswer, value ];
         },
       }),
     },
     'DCCOMICS.ANSWER': {
-      target: 'dc-comics',
+      target: '2',
       actions: assign({
         answers: (ctx, { value }) => {
           const currentAnswer = ctx.answers.filter(answer => answer.type !== 'dc-comics');
