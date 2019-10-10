@@ -10,3 +10,12 @@ docker run -p 8080:8080 -p 11311:11311 -v /home/developer/Workspace/easywelfare/
 
 # the gold mine
 https://github.com/izaera/liferay-js-toolkit-showcase
+
+## How to reload the portlet after any code change (avoid browser cache)
+- run `npm run build` from the command line
+  + if the code has just had major changes, it is safe to remove beforehand all the content of directory build
+- in the browser page:
+  + remove the portlet
+  + reload the page
+  + re-insert the portlet
+  + reload the page
